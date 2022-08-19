@@ -1,0 +1,91 @@
+query HomePageOnLoad{
+  action: moviesByGenre(genre: ACTION){
+    ... movieDetails
+  }
+  adventure: moviesByGenre(genre: ADVENTURE){
+    ... movieDetails
+  }
+  animation: moviesByGenre(genre: ANIMATION){
+    ... movieDetails
+  }
+}
+
+query HomePageOnScrollDown($genre: Genre!){
+  movies: moviesByGenre(genre: $genre){
+    ... movieDetails
+  }
+}
+
+query MovieWithReviews($id: ID!){
+  movieDetails(id: $id){
+    ... movieDetails
+  }
+}
+
+query LoadUserProfile($userId: ID!){
+  userProfile(id: $userId){
+    id
+    name
+    favoriteGenre
+    recommended{
+      ...movieDetails
+    }
+    watchList{
+      ...movieDetails
+    }
+  }
+}
+
+mutation AddToWatchList($addToWatch: WatchListInput!){
+  addToWatchList(input: $addToWatch){
+    status
+    watchList{
+      ...movieDetails
+    }
+  }
+}
+
+mutation UserProfileUpdate($customerInput: CustomerInput!){
+  updateProfile(input: $customerInput){
+    id
+    name
+    favoriteGenre
+    recommended{
+      ...movieDetails
+    }
+    watchList{
+      ...movieDetails
+    }
+  }
+}
+
+
+fragment movieDetails on Movie{
+    id
+    title
+    releaseYear
+    overallRating: rating
+    genre
+    ... on MovieDetails{
+      reviews{
+        id
+        username
+        rating
+        comment
+      }
+    }
+}
+
+{
+  "id": 790,
+  "genre": "CRIME",
+  "userId": 1,
+  "addToWatch": {
+    "customerId": 1,
+    "movieId": 456
+  },
+  "customerInput": {
+    "id": 1,
+    "name": "jackson",
+    "favoriteGenre": "FANTASY"
+  }

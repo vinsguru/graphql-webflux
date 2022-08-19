@@ -1,0 +1,40 @@
+type Query{
+    customers: [Customer]!
+    customerById(id: ID!): CustomerResponse!
+}
+
+type Mutation{
+    createCustomer(customer: CustomerInput!): Customer
+    updateCustomer(id: ID!, customer: CustomerInput!): Customer
+    deleteCustomer(id: ID!): DeleteResponse!
+}
+
+union CustomerResponse = Customer | CustomerNotFound
+
+type CustomerNotFound{
+    id: ID!
+    message: String
+}
+
+type Customer{
+    id: ID!
+    name: String
+    age: Int
+    city: String
+}
+
+input CustomerInput{
+    name: String
+    age: Int
+    city: String
+}
+
+type DeleteResponse{
+    id: ID!,
+    status: Status
+}
+
+enum Status{
+    SUCCESS
+    FAILURE
+}

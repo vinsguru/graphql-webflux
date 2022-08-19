@@ -1,0 +1,36 @@
+
+type Query{
+    products: [Product]
+}
+
+interface Product{
+    id: ID!
+    description: String
+    price: Int
+}
+
+type Fruit implements Product{
+    id: ID!
+    description: String
+    price: Int
+    expiryDate: String
+}
+
+type Electronics implements Product{
+    id: ID!
+    description: String
+    price: Int
+    brand: Brand
+}
+
+enum Brand {
+    APPLE
+    SAMSUNG
+}
+
+type Book implements Product{
+    id: ID!
+    description: String
+    price: Int
+    author: String
+}

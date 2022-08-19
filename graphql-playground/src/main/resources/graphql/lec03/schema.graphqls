@@ -1,0 +1,17 @@
+
+type Query{
+    customers: [Customer]!
+}
+
+type Customer{
+    id: ID!
+    name: String
+    age: Int
+    city: String
+    orders(limit: Int!): [CustomerOrder]!
+}
+
+type CustomerOrder{
+    id: ID!
+    description: String
+}

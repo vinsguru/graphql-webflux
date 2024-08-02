@@ -13,7 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @AutoConfigureHttpGraphQlTester
-@TestPropertySource(properties = "lec=lec14")
+@TestPropertySource(properties = "lec=lec16")
 public class GraphqlCrudTest {
 
 	@Autowired

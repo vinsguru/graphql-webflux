@@ -59,7 +59,7 @@ public class ClientDemo implements CommandLineRunner {
     }
 
     private Mono<Void> customerByIdDemo(){
-        return this.executor("customerByIdDemo", this.client.customerById(1));
+        return this.executor("customerByIdDemo", this.client.customerById(11));
     }
 
     private Mono<Void> createCustomerDemo(){

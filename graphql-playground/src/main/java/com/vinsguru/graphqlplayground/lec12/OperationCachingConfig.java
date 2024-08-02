@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -38,13 +39,14 @@ public class OperationCachingConfig {
         Map<String, PreparsedDocumentEntry> map = new ConcurrentHashMap<>();
         return new PreparsedDocumentProvider() {
             @Override
-            public PreparsedDocumentEntry getDocument(ExecutionInput executionInput, Function<ExecutionInput, PreparsedDocumentEntry> parseAndValidateFunction) {
-                return map.computeIfAbsent(executionInput.getQuery(), key -> {
+            public CompletableFuture<PreparsedDocumentEntry> getDocumentAsync(ExecutionInput executionInput, Function<ExecutionInput, PreparsedDocumentEntry> parseAndValidateFunction) {
+                var documentEntry = map.computeIfAbsent(executionInput.getQuery(), key -> {
                     System.out.println("Not found : " + key);
                     var r = parseAndValidateFunction.apply(executionInput);
                     System.out.println("Caching : " + r);
                     return r;
                 });
+                return CompletableFuture.completedFuture(documentEntry);
             }
         };
     }
